@@ -31,7 +31,7 @@ end)
 ```
 
 ## exports.mongodb.isConnected
-* Returns boolean
+* returns status<boolean>
 
 Returns true if database connection is established.
 
@@ -59,6 +59,7 @@ Inserts a single document into MongoDB.
 * `params.options<Object>` - optional settings object. See [collection.find in docs](http://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#find)
 * `params.limit<number>` - limit documents count
 * `callback(success<boolean>, documents<Array>)` - callback (optional)
+* returns results<Array>
 
 Performs a find query.
 
@@ -68,14 +69,14 @@ Performs a find query.
 * `params.query<Object>` - filter query object
 * `params.options<Object>` - optional settings object. See [collection.find in docs](http://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#find)
 * `callback(success<boolean>, documents<Array>)` - callback (optional)
-
-Performns a find query with `limit = 1`.
+* returns result<Object>
 
 ## exports.mongodb.update(params, callback);
 * `params<Object>` - params object
 * `params.collection<string>` - collection name
 * `params.query<Object>` - filter query object
 * `params.update<Object>` - update query object
+* `params.pipeline<Array>` - pipeline query array | if pipeline exists, update parametere becomes unused
 * `params.options<Object>` - optional settings object. See [collection.updateMany in docs](http://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#updateMany)
 * `callback(success<boolean>, updatedCount<number>)` - callback (optional)
 
@@ -86,6 +87,7 @@ Update multiple documents on MongoDB.
 * `params.collection<string>` - collection name
 * `params.query<Object>` - filter query object
 * `params.update<Object>` - update query object
+* `params.pipeline<Array>` - pipeline query array | if pipeline exists, update parametere becomes unused
 * `params.options<Object>` - optional settings object. See [collection.updateMany in docs](http://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#updateMany)
 * `callback(success<boolean>, updatedCount<number>)` - callback (optional)
 
@@ -97,6 +99,7 @@ Update a single document on MongoDB.
 * `params.query<Object>` - filter query object
 * `params.options<Object>` - optional settings object. See [collection.countDocuments in docs](http://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#countDocuments)
 * `callback(success<boolean>, count<number>)` - callback (optional)
+* returns result<Int>
 
 Gets the number of documents matching the filter.
 
@@ -117,3 +120,11 @@ Delete multiple documents on MongoDB.
 * `callback(success<boolean>, deletedCount<number>)` - callback (optional)
 
 Delete a document on MongoDB.
+
+## exports.mongodb.aggregate(params);
+* `params<Object>` - params object
+* `params.collection<string>` - collection name
+* `params.pipeline<Array>` - pipeline query array
+* returns results<Array>
+
+Perform an aggregation on MongoDB
