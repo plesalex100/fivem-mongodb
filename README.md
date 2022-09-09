@@ -205,7 +205,7 @@ Gets the number of documents matching the filter.
 Example (Lua)
 ```lua
 -- async method
-local adminsCount = exports.mognodb:find({collection = "users", query = { adminLevel = { ['$gte'] = 1 } })
+local adminsCount = exports.mognodb:count({collection = "users", query = { adminLevel = { ['$gte'] = 1 } })
 print("There are in total "..adminsCount.." admins")
 ```
 
