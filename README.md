@@ -29,7 +29,21 @@ Returns true if database connection is established.
 * `params.documents<Object>` - an array of documents to insert
 * `params.options<Object>` - optional settings object. See [collection.insertMany in docs](http://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#insertMany)
 * `callback(success<boolean>, insertedCount<number>, insertedIds<Array>)` - callback (optional)
+
 Inserts an array of documents into MongoDB.
+
+Example (Lua):
+```lua
+exports.mongodb:insert({collection = "users", documents = {
+    { name = "plesalex100", adminLevel = 5, userMoney = {wallet = 100, bank = 5000} },
+    { name = "alexples99", adminLevel = 0, userMoney = {wallet = 0, bank = 1000} },
+    { name = "ples100alex", adminLevel = 3, userMoney = {wallet = 2000, bank = 50} }
+}}, function(success, insertedIds)
+    for i in pairs(insertedIds) do
+        print("Inserted document with _id = "..insetredIds[i])
+    end
+end)
+```
 
 ## exports.mongodb.insertOne(params, callback);
 * `params<Object>` - params object
@@ -39,6 +53,14 @@ Inserts an array of documents into MongoDB.
 * `callback(success<boolean>, insertedCount<number>, insertedIds<Array>)` - callback (optional)
 
 Inserts a single document into MongoDB.
+
+Example (Lua):
+```lua
+local insertedId = exports.mongodb:insertOne({collection = "users", document = {
+     name = "100alexples", adminLevel = 0, userMoney = {wallet = 500, bank = 1000}
+}})
+print("Inserted document with _id = "..insertedId)
+```
 
 ## exports.mongodb.find(params, callback);
 * `params<Object>` - params object
@@ -91,7 +113,7 @@ end
 
 Example (Lua):
 ```lua
-exports.mongodb:findOne({ collection = "users", query = { _id = id }, options = {
+exports.mongodb:findOne({ collection = "users", query = { id = id }, options = {
     projection = {
         _id = 0,
         name = 1
@@ -106,7 +128,7 @@ exports.mongodb:findOne({ collection = "users", query = { _id = id }, options = 
 end)
 
 -- async method
-local user = exports.mognodb:findOne({collection = "users", query = { _id = id }, options = {
+local user = exports.mognodb:findOne({collection = "users", query = { id = id }, options = {
     projection = {
         _id = 0,
         name = 1
