@@ -130,28 +130,33 @@ Update multiple documents on MongoDB.
 
 Example (Lua):
 ```lua
-exports.mongodb:update({ collection = "users", query = { hoursPlayed = { ['$gte'] = 100, ['$lte] } }, update = {
+-- without pipeline
+exports.mongodb:update({ collection = "users", query = { eligibile = { ['$exists'] = true }, update = {
+    ['$unset'] = {
+        eligible = 1
+    }
+}})
+exports.mongodb:update({ collection = "users", query = { hoursPlayed = { ['$gte'] = 10, ['$lte'] = 100 } }, update = {
     ['$set'] = {
-        
+        eligible = true
     }
 }}, function (success, nModified)
     if not success then return end
-    print("Updated "..nModified.." documents")
+    print(nModified.." users are now eligible (have between 10 and 100 hours played)")
 end)
 
--- async method
-local admins = exports.mognodb:find({collection = "users", query = { adminLevel = { ['$gte'] = 1 } }, options = {
-    projection = {
-        _id = 0,
-        name = 1,
-        adminLevel = 1
+-- using pipeline
+exports.mongodb:update({ collection = "users", query = {}, pipeline = {
+    {
+        ['$unset'] = "eligible"
+    },
+    {
+        ['$match'] = { hoursPlayed = { ['$gte'] = 10, ['$lte'] = 100 } }
+    },
+    {
+        ['$set'] = { eligible = true }
     }
-}})
-if admins then
-    for i in pairs(admins) do
-       print("Name: "..admins[i].name..", Admin Level: "..admins[i].adminLevel) 
-    end
-end
+})
 ```
 
 ## exports.mongodb.updateOne(params, callback);
