@@ -248,21 +248,21 @@ local results = exports.mongodb:aggregate({collection = "users", pipeline = {
     {
         -- project only the name, wallet and bank
         ['$project'] = {
-            name: 1,
-            wallet: "$userMoney.wallet",
-            bank: "$userMoney.bank"
+            name = 1,
+            wallet = "$userMoney.wallet",
+            bank = "$userMoney.bank"
         }
     },
     {
         -- add total field that is equal to wallet field + bank field
         ['$addFields'] = {
-            total: {$add: {"$wallet", "$bank"}}
+            total = {['$add'] = {"$wallet", "$bank"}}
         }
     },
     {
         -- sort documents by total, in descending order
         ['$sort'] = {
-            total: -1
+            total = -1
         }
     }
     {
