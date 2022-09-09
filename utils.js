@@ -1,4 +1,4 @@
-const mongodb = require("mongodb");
+const { ObjectID } = require("mongodb");
 
 function exportDocument(document) {
     if (!document) return;
@@ -22,7 +22,7 @@ function safeObjectArgument(object) {
         }, {});
     }
     if (typeof object !== "object") return {};
-    if (object._id) object._id = mongodb.ObjectID(object._id);
+    if (object._id) object._id = ObjectID(object._id);
     return object;
 }
 
