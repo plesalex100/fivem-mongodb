@@ -264,7 +264,7 @@ local results = exports.mongodb:aggregate({collection = "users", pipeline = {
         ['$sort'] = {
             total = -1
         }
-    }
+    },
     {
         -- limit documents to 10
         ['$limit'] = 10
