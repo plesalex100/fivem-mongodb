@@ -234,7 +234,7 @@ local results = exports.mongodb:aggregate({collection = "users", pipeline = {
     {
         -- add total field that is equal to wallet field + bank field
         ['$addFields'] = {
-            total: {$add: ["$wallet", "$bank"]}
+            total: {$add: {"$wallet", "$bank"}}
         }
     },
     {
