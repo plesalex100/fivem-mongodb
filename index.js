@@ -268,6 +268,24 @@ async function dbAggregate(params) {
     }
 }
 
+async function dbBulkWrite(params) {
+    if (!checkDatabaseReady()) return;
+    if (!checkParams(params)) return console.log(`^1[MongoDB][ERROR] (exports.bulkWrite) Invalid params object.^0`);
+
+    const collection = getParamsCollection(params);
+    if (!collection) return console.log(`^1[MongoDB][ERROR] (exports.bulkWrite) Invalid collection "${params.collection}"^0`);
+
+    if (!params.operations) return console.log(`^1[MongoDB][ERROR] (exports.bulkWrite) Invalid operations^0`);
+
+    try {
+        const result = await collection.bulkWrite(params.operations);
+        return result;
+    } catch(err) {
+        console.log(`^1[MongoDB][ERROR] (exports.bulkWrite) ${err}^0`);
+        return false;
+    }
+}
+
 /* Exports definitions */
 
 exports("isConnected", () => !!db);
@@ -291,3 +309,5 @@ exports("deleteOne", (params, callback) => {
 });
 
 exports("aggregate", dbAggregate);
+
+exports("bulkWrite", dbBulkWrite);
