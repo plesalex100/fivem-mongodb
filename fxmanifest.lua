@@ -11,3 +11,11 @@ server_only 'yes'
 server_scripts {
     "index.js"
 }
+
+convar_category 'mongodb' {
+    "MongoDB Connection",
+    {
+        { "Mongo URL", "$mongodb_url", "CV_STRING", "changeme" },
+        { "Mongo Database", "$mongodb_database", "CV_STRING", "changeme"}
+    }
+}
