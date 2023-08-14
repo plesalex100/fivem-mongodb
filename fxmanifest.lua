@@ -15,7 +15,7 @@ server_scripts {
 convar_category 'mongodb' {
     "MongoDB Connection",
     {
-        { "Mongo URL", "$mongodb_url", "CV_STRING", "changeme" },
-        { "Mongo Database", "$mongodb_database", "CV_STRING", "changeme"}
+        { "Mongo URL", "mongodb_url", "CV_STRING", "changeme" },
+        { "Mongo Database", "mongodb_database", "CV_STRING", "changeme" }
     }
 }
